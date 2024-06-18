@@ -25,3 +25,4 @@ output/*
 # Session Data files
 
 .RData
+.Rproj.user
