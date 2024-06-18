@@ -1,0 +1,27 @@
+
+# Content of the data folder except the structure ------------------------
+
+!data
+data/derived/*
+data/export/*
+
+# Stata dataset and output files -----------------------------------------
+
+output/*
+*.dta
+*.gph
+*.log
+*.smcl
+*.stpr
+*.stsem
+
+# Default .gitignore files for R -----------------------------------------
+
+# History files
+
+.Rhistory
+.Rapp.history
+
+# Session Data files
+
+.RData
