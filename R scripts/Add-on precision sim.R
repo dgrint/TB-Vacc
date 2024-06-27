@@ -50,8 +50,44 @@ tb_cohort[tb_cohort$scTB == 1,]
 
 ## Simple analysis
 
-# 0.3% chance of cTB at 24 months
-# 0.3% chance of scTB at 24 months
+# 0.3% chance of cTB annually
+# 0.6% chance of scTB annually
+# Work with N=5000
+# Follow-up for 2.5 years
+
+# In the first 18 months, expect 450 scTB cases
+# 50% expected to progress
+# 25% regress?
+
+follow <- tibble(id = rep(1:450),
+                 rand = runif(450, 0, 1)
+                 )
+
+follow_end <- follow |> 
+  mutate(outcome = case_when(
+                        (0 <= rand & rand <= 0.5) ~ "cTB",
+                        (0.5 < rand & rand <= 0.75) ~ "scTB",
+                        (0.75 < rand & rand <= 1) ~ "noTB")
+         )
+
+table(follow_end$outcome)
+prop.table(table(follow_end$outcome))
+
+p <- 0.5
+n <- 58
+
+margin <- qnorm(0.975)*sqrt(p*(1-p)/n)
+
+lowerinterval <- p - margin
+lowerinterval
+
+upperinterval <- p + margin
+upperinterval
+
+
+
+
+
 
 cTB <- tibble(id = rep(1:6500)) |> 
   mutate(arm = 'cTB',
@@ -95,9 +131,14 @@ log_ci
 # 0.3% chance of scTB at 12 months
 # 50% chance of scTB -> cTB at 24 months
 
-m12 <- tibble(id = rep(1:6500)) |> 
+0.006*9000
+0.009*9000
+
+m12 <- tibble(id = rep(1:9000)) |> 
   mutate(arm = 'scTB',
-         scTB = rbinom(6500, 1, 0.003))
+         scTB = rbinom(9000, 1, 0.006))
+
+prop.table(table(m12$scTB))
 
 m24 <- m12 |> 
   filter(scTB == 1 ) |> 
@@ -126,7 +167,34 @@ get_wilson_CI <- function(x, alpha = 0.05) {
   return(CI)
 }
 
-summarise(m24, mean(outcome))
+
 get_wilson_CI(m24$outcome)
+
+n <- 54
+p_hat <- .34
+alpha <- 0.05
+
+SE_hat_sq <- p_hat * (1 - p_hat) / n
+crit <- qnorm(1 - alpha / 2)
+omega <- n / (n + crit^2)
+A <- p_hat + crit^2 / (2 * n)
+B <- crit * sqrt(SE_hat_sq + crit^2 / (4 * n^2))
+CI <- c('lower' = omega * (A - B), 
+        'upper' = omega * (A + B))
+CI
+
+summarise(m24, mean(outcome))
+
+
+# Directly calculate CI
+
+prop.test(54*0.3, 54, correct = FALSE)
+prop.test(54*0.34, 54, correct = FALSE)
+
+
+
+
+
+
 
 

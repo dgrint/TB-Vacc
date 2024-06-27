@@ -18,30 +18,31 @@ p_load(tidyverse,
 n_rep <- 1000
 n_id <- 10000
 
-set.seed(321)
+set.seed(9864)
 
 rr1 <- tibble(
   rep = rep(1:n_rep, each = n_id),
   id = rep(1:n_id, times = n_rep),
   newvac = rep(c(0, 1), each = n_id / 2, times = n_rep),
-  rr = 1,
+  rr = 1.25,
   sens = 1,
   spec = 1,
   spec95 = 0.95,
-  case = rbinom(length(case), 1, 0.05)
+  case = rbinom(n_rep * n_id, 1, 0.05),
+  case_n =rbinom(n_rep * n_id, 1, rr*0.05)
 )
 
 # Calculate obs_case
 rr1_obs <- rr1 %>%
   mutate(obs_case = ifelse(
     case == 1,
-    rbinom(length(case), 1, rr * sens * 1),    # probability of observing case depends on RR and sens
+    rbinom(length(case), 1, sens),             # probability of observing case depends on RR and sens
     rbinom(length(case), 1, (1 - spec))),      # probability of observing no case depends on spec
     obs_case95 = ifelse(
     case == 1,
-    rbinom(length(case), 1, rr * sens * 1),    # probability of observing case depends on RR and sens
+    rbinom(length(case), 1, sens),             # probability of observing case depends on RR and sens
     rbinom(length(case), 1, (1 - spec95)))     # probability of observing no case depends on spec
-    )  
+    ) 
 
 # Validation checks
 rr1_obs[4995:5005,]
@@ -61,6 +62,35 @@ view(case_rate)
 rr1_obs |> 
   group_by(newvac) |> 
   summarise(mean(case), mean(obs_case), mean(obs_case95))
+
+# Save dataset
+write.csv(rr1_obs, "C:/Users/eidedgri/Documents/GitHub/TB-Vacc/Output/spec100.csv")
+
+
+# RR 1.25
+
+rr125_obs <- rr1 %>%
+  mutate(obs_case95 = 
+    ifelse(newvac == 1,
+           ifelse(
+             case_n == 1,
+              rbinom(length(case_n), 1, sens),           
+              rbinom(length(case_n), 1, (1 - spec95))
+           ),
+           ifelse(
+             case == 1,
+             rbinom(length(case), 1, sens),             
+             rbinom(length(case), 1, (1 - spec95))
+           )
+    )
+  ) 
+
+rr125_obs |> 
+  group_by(newvac) |> 
+  summarise(mean(case), mean(case_n), mean(obs_case95))
+
+# Save dataset
+write.csv(rr125_obs, "C:/Users/eidedgri/Documents/GitHub/TB-Vacc/Output/rr125.csv")
 
 
 ## Analysis model
@@ -122,23 +152,24 @@ rd_mod95 <- rr1_obs |>
   nest_by(rep) |> 
   mutate(model = list(glm(obs_case95 ~ as.factor(newvac), data = data, family = binomial(link = "identity"))))
 
+
 rd_mod95_ci <- rd_mod95 |> 
   reframe(tidy(model, conf.int = TRUE, exponentiate = FALSE)) |> 
   filter(term == 'as.factor(newvac)1')
 
 rd_pow95 <- rd_mod95_ci |> 
   select(rep, conf.high, p.value) |> 
-  mutate(power = case_when(conf.high > 0.24375 ~ 1,
+  mutate(power = case_when(conf.high > 0.024375 ~ 1,
                            .default = 0))
 
 rd_tab95 <- table(rd_pow95$power)
 prop.table(rd_tab95)
 
 
+
 end.time <- Sys.time()
 time.taken <- end.time - start.time
 time.taken
-
 
 
 
