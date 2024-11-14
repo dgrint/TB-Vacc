@@ -131,8 +131,8 @@ log_ci
 # 0.3% chance of scTB at 12 months
 # 50% chance of scTB -> cTB at 24 months
 
-0.006*9000
-0.009*9000
+0.006*7000
+0.009*7000
 
 m12 <- tibble(id = rep(1:9000)) |> 
   mutate(arm = 'scTB',
@@ -170,7 +170,7 @@ get_wilson_CI <- function(x, alpha = 0.05) {
 
 get_wilson_CI(m24$outcome)
 
-n <- 54
+n <- 63
 p_hat <- .34
 alpha <- 0.05
 
@@ -188,8 +188,8 @@ summarise(m24, mean(outcome))
 
 # Directly calculate CI
 
-prop.test(54*0.3, 54, correct = FALSE)
-prop.test(54*0.34, 54, correct = FALSE)
+prop.test(n*0.3, n, correct = FALSE)
+prop.test(n*0.34, n, correct = FALSE)
 
 
 
