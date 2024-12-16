@@ -103,6 +103,8 @@ run;
 
 proc contents data=est95_125; run;
 
+proc means data=rr125 n mean; class newvac; var case case_n obs_case95; run;
+
 data est95_125_type1;
 	set est95_125;
 
