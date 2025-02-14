@@ -22,6 +22,7 @@ p_load(tidyverse,
 
 n_rep <- 2000
 n_id <- 32000
+risk <- 0.02
 
 # Random number seed
 
@@ -34,8 +35,8 @@ rr1 <- tibble(
   id = rep(1:n_id, times = n_rep),
   newvac = rep(c(0, 1), each = n_id / 2, times = n_rep),
   rr = 1,
-  case = rbinom(n_rep * n_id, 1, 0.02),
-  case_n = rbinom(n_rep * n_id, 1, (rr*0.02))
+  case = rbinom(n_rep * n_id, 1, risk),
+  case_n = rbinom(n_rep * n_id, 1, (rr*risk))
 )
 
 rr1 |> 
@@ -230,6 +231,7 @@ prop
 
 sqrt((prop[2]*(prop[1]))/n_rep)
 
+
 ## 95% 98%
 
 start.time <- Sys.time()
@@ -262,7 +264,6 @@ prop
 # Monte Carlo error
 
 sqrt((prop[2]*(prop[1]))/n_rep)
-
 
 
 ## 64% 85%
@@ -309,6 +310,7 @@ sqrt((prop[2]*(prop[1]))/n_rep)
 
 n_rep <- 2000
 n_id <- 32000
+risk <- 0.02
 
 # Random number seed
 
@@ -321,8 +323,8 @@ rr125 <- tibble(
   id = rep(1:n_id, times = n_rep),
   newvac = rep(c(0, 1), each = n_id / 2, times = n_rep),
   rr = 1.25,
-  case = rbinom(n_rep * n_id, 1, 0.02),
-  case_n = rbinom(n_rep * n_id, 1, (rr*0.02))
+  case = rbinom(n_rep * n_id, 1, risk),
+  case_n = rbinom(n_rep * n_id, 1, (rr*risk))
 )
 
 rr125 |> 
@@ -634,6 +636,7 @@ sqrt((prop[2]*(prop[1]))/n_rep)
 
 n_rep <- 2000
 n_id <- 12000
+risk <- 0.05
 
 # Random number seed
 
@@ -646,8 +649,8 @@ rr1 <- tibble(
   id = rep(1:n_id, times = n_rep),
   newvac = rep(c(0, 1), each = n_id / 2, times = n_rep),
   rr = 1,
-  case = rbinom(n_rep * n_id, 1, 0.05),
-  case_n = rbinom(n_rep * n_id, 1, (rr*0.05))
+  case = rbinom(n_rep * n_id, 1, risk),
+  case_n = rbinom(n_rep * n_id, 1, (rr*risk))
 )
 
 rr1 |> 
@@ -737,7 +740,6 @@ prop
 # Monte Carlo error
 
 sqrt((prop[2]*(prop[1]))/n_rep)
-
 
 
 ## 100% 95%
@@ -919,6 +921,7 @@ sqrt((prop[2]*(prop[1]))/n_rep)
 
 n_rep <- 2000
 n_id <- 12000
+risk <- 0.05
 
 # Random number seed
 
@@ -931,8 +934,8 @@ rr125 <- tibble(
   id = rep(1:n_id, times = n_rep),
   newvac = rep(c(0, 1), each = n_id / 2, times = n_rep),
   rr = 1.25,
-  case = rbinom(n_rep * n_id, 1, 0.05),
-  case_n = rbinom(n_rep * n_id, 1, (rr*0.05))
+  case = rbinom(n_rep * n_id, 1, risk),
+  case_n = rbinom(n_rep * n_id, 1, (rr*risk))
 )
 
 rr125 |> 
@@ -1244,6 +1247,7 @@ sqrt((prop[2]*(prop[1]))/n_rep)
 
 n_rep <- 2000
 n_id <- 7300
+risk <- 0.08
 
 # Random number seed
 
@@ -1256,8 +1260,8 @@ rr1 <- tibble(
   id = rep(1:n_id, times = n_rep),
   newvac = rep(c(0, 1), each = n_id / 2, times = n_rep),
   rr = 1,
-  case = rbinom(n_rep * n_id, 1, 0.08),
-  case_n = rbinom(n_rep * n_id, 1, (rr*0.08))
+  case = rbinom(n_rep * n_id, 1, risk),
+  case_n = rbinom(n_rep * n_id, 1, (rr*risk))
 )
 
 rr1 |> 
@@ -1451,6 +1455,7 @@ prop
 
 sqrt((prop[2]*(prop[1]))/n_rep)
 
+
 ## 95% 98%
 
 start.time <- Sys.time()
@@ -1529,6 +1534,7 @@ sqrt((prop[2]*(prop[1]))/n_rep)
 
 n_rep <- 2000
 n_id <- 7300
+risk <- 0.08
 
 # Random number seed
 
@@ -1541,8 +1547,8 @@ rr125 <- tibble(
   id = rep(1:n_id, times = n_rep),
   newvac = rep(c(0, 1), each = n_id / 2, times = n_rep),
   rr = 1.25,
-  case = rbinom(n_rep * n_id, 1, 0.08),
-  case_n = rbinom(n_rep * n_id, 1, (rr*0.08))
+  case = rbinom(n_rep * n_id, 1, risk),
+  case_n = rbinom(n_rep * n_id, 1, (rr*risk))
 )
 
 rr125 |> 
