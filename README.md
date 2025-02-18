@@ -1,12 +1,19 @@
-# This is a template repo
+# TB-Vacc
+
+This repository contains code to run a simulation study of the impact of imperfect sensitivity and specificity on the interpretation of a non-inferiority outcome in a trial of a new TB vaccine.
+
+The file 'R scripts/Impact of specificity simulation.R' runs the simulation. For ease of readability, the code is duplicated under section headings for each combination of input parameters.
+
+Simulations are run for three 2-year TB infection risk scenarios:
+* 2%
+* 5%
+* 8%
+
+For each scenario, simulations are run for the following combinations of sensitivity and specificity of the tool used to measure TB infection:
+* 100%; 100;
+* 100%; 95%;
+* 95%; 100%;
+* 95%; 95%;
+* 95%; 98%;
+* 64%; 85%;
  
-This is a template repository. It contains the basic file structure we should maintain across all our working repos.
-
-After creating a new repository using this template, please complete these steps:
-
-* Update the README.md file: Give the repo a meaningful title and add some descriptive text in the README.md
-* Clone the new repository to your local workspace.
-* Start adding files to your new repo and commit them.
-* When ready, push the commits to upload the new files to the IMPALATRIAL github organisation area.
-
-NOTE: Do not delete the .gitignore txt files. They are required in order to maintain the file structure when no other files are present.
