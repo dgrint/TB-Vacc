@@ -4,6 +4,7 @@
 !data
 data/derived/*
 data/export/*
+!hidden
 
 # Stata dataset and output files -----------------------------------------
 
