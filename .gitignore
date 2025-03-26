@@ -1,10 +1,7 @@
 
 # Content of the data folder except the structure ------------------------
 
-!data
-data/derived/*
-data/export/*
-
+data/*
 hidden
 
 # Stata dataset and output files -----------------------------------------
@@ -26,5 +23,5 @@ output/*
 
 # Session Data files
 
-.RData
-.Rproj.user
+*.RData
+*.Rproj.user
