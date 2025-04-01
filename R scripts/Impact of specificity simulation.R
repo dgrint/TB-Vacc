@@ -7,7 +7,6 @@
 library(pacman)
 
 p_load(tidyverse,
-       lme4,
        broom,
        furrr)
 
